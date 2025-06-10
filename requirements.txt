@@ -1,0 +1,10 @@
+streamlit
+pandas
+numpy
+scikit-learn
+tensorflow
+yfinance
+google-generativeai
+pymongo
+joblib
+python-dotenv

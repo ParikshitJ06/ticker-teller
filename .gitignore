@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Environment folders
+env/
+.conda/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Model artifacts
+# /models/*.keras
+# /models/*.h5
+# /models/*.pkl
+
+# Data files (keep specific CSVs you want versioned)
+# *.csv
+# !backend/infy-bse.csv  # <-- if you want to keep this in version control, else remove this line
+
+# IDE settings
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Streamlit cache/config
+.streamlit/
+*.toml
+
+# Jupyter Notebook checkpoints (if ever added)
+.ipynb_checkpoints/
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Ignore frontend Python scripts if converted to JS later
+frontend/*.js
+
+# Ignore Gemini/Cohere/OpenAI API Keys if stored in env files
+.env
+.env.*
