@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 
 from backend.news_processor import analyze_and_store_news
 from backend.lstm_model import predict_lstm, evaluate_lstm
-from backend.ensemble_model import combine_predictions
 from backend.fetch_live_data import fetch_live_price
 from backend.mongo import get_latest_llm
+from backend.llm_verdict import generate_llm_verdict  # 🔥 new import
 
 # ───────────── Streamlit UI ─────────────
 st.set_page_config(page_title="Infosys Stock AI Dashboard", layout="centered")
@@ -52,14 +52,29 @@ try:
 except:
     st.error("Failed to fetch live market price.")
 
-# 🧩 Ensemble Final Verdict
-st.subheader("🧩 Ensemble Final Recommendation")
-if lstm_pred is not None and llm_data:
-    delta = lstm_pred - live_price
-    verdict = combine_predictions(delta, llm_data['sentiment'])
-    st.success(f"📌 Final Verdict: **{verdict}**")
+# 🧠 LLM-Based Final Verdict (No Ensemble)
+st.subheader("🧠 Final Verdict by LLM")
+
+# Sample fundamentals (can be dynamically loaded later)
+fundamentals = {
+    "P/E": 24.5,
+    "EPS": 53.2,
+    "ROE": "19%",
+    "Revenue Growth": "13% YoY"
+}
+
+if lstm_pred is not None and live_price is not None and llm_data:
+    with st.spinner("🧠 Thinking..."):
+        verdict_result = generate_llm_verdict(
+            predicted_price=lstm_pred,
+            current_price=live_price,
+            news_sentiment=llm_data,
+            fundamentals=fundamentals
+        )
+    st.success(f"📌 **Verdict:** {verdict_result['verdict']}")
+    st.info(f"📝 **Reasoning:** {verdict_result['reasoning']}")
 else:
-    st.info("Awaiting both prediction and LLM data to generate recommendation.")
+    st.info("Please refresh to generate prediction and sentiment before showing verdict.")
 
 # 📉 Model Evaluation
 st.subheader("📉 LSTM Model Evaluation")
